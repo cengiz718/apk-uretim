@@ -16,10 +16,8 @@ jobs:
           distribution: 'temurin'
       - name: Android SDK Kur
         uses: android-actions/setup-android@v3
-      - name: Gradle Kur ve APK Derle
-        run: |
-          sudo apt-get update -y && sudo apt-get install -y gradle
-          gradle assembleDebug --no-daemon
+      - name: APK Derle
+        run: ./gradlew assembleDebug
       - name: APK Dosyasini Yukle
         uses: actions/upload-artifact@v4
         with:
