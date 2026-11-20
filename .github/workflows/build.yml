@@ -10,12 +10,15 @@ jobs:
       - name: Kodlari Cek
         uses: actions/checkout@v4
       - name: Java 17 Kur
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Android SDK Kur
-        uses: android-actions/setup-android@v3
+      - name: Android SDK Ayarla
+        run: |
+          export ANDROID_HOME=${ANDROID_HOME:-$ANDROID_SDK_ROOT}
+          echo "ANDROID_HOME=$ANDROID_HOME" >> $GITHUB_ENV
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_HOME "platforms;android-34" "build-tools;34.0.0" > /dev/null
       - name: Gradle 8.7 ile APK Derle
         run: |
           curl -sSL https://services.gradle.org/distributions/gradle-8.7-bin.zip -o /tmp/gradle.zip
